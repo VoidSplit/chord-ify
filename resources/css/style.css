@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url(errors/404.css);
+@import url(sidebar.css);
+@import url(gallery.css);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+:root {
+    /* General */
+    --background: #393d3f;
+    --download: #001427;
+    --download-hover: #003566;
+    --accent: #ef233c;
+    --accent-hover: #d90429;
+    /* Error Page */
+    /* - 404 */
+    --e404-diffuse: #2c2f31;
+    --e404-diffuse-shadow: -1px -1px rgb(7, 7, 7)
+}
+#page-wrapper {
+    background-color: var(--background);
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas: "sidebar content";
+    grid-template-columns: 300px;
+}
+#content {
+    grid-column: 2;
+    width: 100%;
+}
+.hidden {
+    display: none !important;
+}
+
+#addmodal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    height: 100%;
+    width: calc(100% - 300px);
+    display: flex;
+    background-color: #ececec;
+}
+#addmodal .preview {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#addmodal .preview canvas {
+    height: 600px;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+#addmodal .configurator {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#addmodal .configurator::before {
+    content: '';
+    position: absolute;
+    height: 90%;
+    width: 5px;
+    top: 5%;
+    left: 0;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: 5px;
+}
+#addmodal .configurator form {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 45px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#addmodal .configurator form * {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+#addmodal .configurator form .name {
+    background-color: #ececec;
+    width: 100%;
+}
+#addmodal .configurator form .numbers {
+    background-color: #ececec;
+    display: flex;
+    justify-content: space-around;
+}
+#addmodal .configurator form .numbers input {
+    aspect-ratio: 1;
+    height: 35px;
+    text-align: center;
+}
+#addmodal .configurator form .barre * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#addmodal .configurator form .barre {
+    background-color: #ececec;
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    grid-template-rows: 30px 80px;
+}
+
+#addmodal .configurator form .barre .top {
+    grid-column: 1/4;
+    flex-direction: row-reverse;
+    height: 30px;
+    justify-content: flex-end;
+}
+#addmodal .configurator form .barre .center {
+    font-size: 1.5rem;
+}
+#addmodal .configurator form .moove {
+    background-color: #ececec;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+#addmodal .configurator form .moove input[type=number] {
+    margin-left: 25px;
+}
+#addmodal .configurator form .submit {
+    background-color: #001427;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s;
+    cursor: pointer;
+}
+#addmodal .configurator form .submit:hover {
+    background-color: #003566;
+}
+
+#copyTag {
+    left: calc(50% + 150px);
+    bottom: 50px;
+    transform: translateX(-50%);
+    position: absolute;
+    background-color: #fff;
+    padding: 15px 35px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity .2s;
+}
+#copyTag.fadeIn {
+    opacity: 1;
+}
+#copyTag.fadeOut {
+    opacity: 0;
+}
