@@ -252,14 +252,14 @@ function modalPreview(chord) {
 
     //console.log(canvas,chord)
 }
-
+/*
 function generateCode() {
     let storage = getChordsFromLocalStorage()
     let str = storage.join("+")
     return str
 }
 generateCode()
-
+*/
 
 
 
