@@ -7,6 +7,11 @@ function displayElementTo(element, parent)  {
 }
 init()
 
+const DATA = {
+    groups: [],
+    theme: "dark"
+}
+
 function generateGalleryPage() {
     let page = document.createElement('div')
 
@@ -31,7 +36,18 @@ function generateGalleryPage() {
     navigationButton.setAttribute('tabindex', "0")
 
     navigationButton.addEventListener('click', (e) => {
-        addGroup(page)
+        let id = () => {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+          }
+        let fixedId = id()
+        DATA.groups.push({
+            id: fixedId,
+            name: "",
+            chords: []
+        })
+        addGroup(page, fixedId)
     })
 
     page.append(navigation)
@@ -45,11 +61,12 @@ function generateGalleryPage() {
 
     return page
 }
-function addGroup(parent) {
+function addGroup(parent, id) {
     let group = document.createElement('div')
     let groupTop = document.createElement('div')
     let groupTopP = document.createElement('p')
     let groupTopActions = document.createElement('div')
+    let groupTopActionsModify = document.createElement('div')
     let groupTopActionsToggle = document.createElement('div')
     let groupTopActionsFullscreen = document.createElement('div')
     let groupTopActionsDelete = document.createElement('div')
@@ -59,9 +76,16 @@ function addGroup(parent) {
 
     groupTop.classList = "top fr"
 
-    groupTopP.textContent = "Groupe 1"
+    DATA.groups.filter(g => g.id == id)[0].name = "Nouveau groupe"
+    console.log(DATA)
+    
+    groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
 
     groupTopActions.classList = "actions fr"
+
+    groupTopActionsModify.classList = "modify"
+    groupTopActionsModify.setAttribute('tabindex', "0")
+    groupTopActionsModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
 
     groupTopActionsToggle.classList = "close"
     groupTopActionsToggle.setAttribute('tabindex', "0")
@@ -92,15 +116,50 @@ function addGroup(parent) {
         <p>Ajouter un accord</p>
     `
 
+    addChord.addEventListener('click', (e) => {
+        console.log(DATA, id)
+    })
+
 
     group.append(groupTop, inner)
     groupTop.append(groupTopP,groupTopActions)
-    groupTopActions.append(groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsDelete)
+    groupTopActions.append(groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsModify,groupTopActionsDelete)
     inner.append(addChord)
 
 
     parent.append(group)
 }
+
+function sortGroups() {
+    let name_const = []
+    let name_counter = {}  
+    let newList = [];  
+    
+    for (const i of Array(Object.keys(DATA.groups).length).keys()) {
+      name_const.push(DATA.groups[i].name)
+    }
+    
+    name_const.forEach(name => {
+      if(name == parseInt(name))
+        return;
+      if(!name_counter[name]) {
+        name_counter[name] = 1;
+        newList.push(name);
+      } else {
+         newList.push(`${name} (${name_counter[name]})`);
+         name_counter[name]++;
+      }
+    });
+    
+    for (const i of Array(Object.keys(DATA.groups).length).keys()) {
+      DATA.groups[i].name = (newList[i])
+    }
+    
+    
+    
+    console.log(DATA.groups)
+}
+  
 function testPage() {
     let page = document.createElement('div')
     page.classList = "section fc"

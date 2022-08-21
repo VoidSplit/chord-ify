@@ -82,3 +82,6 @@
 .add-chord .center {
     font-size: 3rem;
 }
+.group.fullscreen {
+    background-color: red;
+}
