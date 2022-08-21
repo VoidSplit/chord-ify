@@ -4,97 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <title>Better Chords</title>
+    <link rel="shortcut icon" href="resources/images/logo.svg" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="resources/css/main.css">
+
+
+    <script src="resources/js/components/toggleMode.js" defer></script>
+    <script src="resources/js/components/sidebar.js" defer></script>
+
     <script src="resources/js/app.js" defer></script>
-    <script src="resources/js/errorPage.js" defer></script>
-    <title>Chord-ify</title>
+
+    <script src="resources/js/horizontalScroll.js" defer></script>
 </head>
 <body>
-    <div id="app">
-        <div id="page-wrapper">
-            <div class="sidebar">
-                <div class="top">
-                    <div class="logo">
-                        <svg width="270" height="270" viewBox="0 0 270 270" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="270" height="270" rx="54" fill="#181818"/>
-                            <circle cx="135.5" cy="135.5" r="25.5" fill="white"/>
-                            <path d="M204.051 119.27C219.764 115.691 235.862 125.699 234.77 141.778C233.981 153.396 231.163 164.862 226.37 175.639C217.591 195.377 202.656 211.741 183.802 222.284C164.947 232.826 143.185 236.979 121.773 234.121C100.36 231.264 80.4491 221.55 65.0183 206.432C49.5875 191.315 39.4669 171.607 36.1709 150.258C32.8749 128.909 36.5807 107.067 46.7337 87.9993C56.8868 68.932 72.9413 53.6651 92.4948 44.4831C103.171 39.4697 114.577 36.4175 126.177 35.39C142.23 33.968 152.566 49.8573 149.31 65.6404L148.819 68.0173C145.834 82.4877 130.675 91.028 117.301 97.3082V97.3082C109.158 101.132 102.473 107.489 98.2453 115.429C94.0175 123.368 92.4744 132.464 93.8469 141.354C95.2194 150.243 99.4337 158.45 105.859 164.745C112.285 171.04 120.576 175.085 129.492 176.275C138.408 177.465 147.47 175.735 155.321 171.345C163.173 166.956 169.391 160.141 173.047 151.923V151.923C179.052 138.423 187.279 123.091 201.685 119.809L204.051 119.27Z" fill="white"/>
-                        </svg>
-                    </div>
-                    <div class="name">Chord-ify</div>
-                </div>
-                <div class="content">
-                    <ul>
-                        <li class="dropdown">
-                            <p class="display">
-                                <i class="fa-solid fa-layer-group"></i>
-                                Gestion de la gallerie
-                                </p>
-                            <div class="inner" id="categoryList">
-                                <a class="active menuLink" id="seeGalleryMenu" href="#">Voir la gallerie</a>
-                                <a href="#" class="menuLink" id="addChordMenu">Ajouter un accord</a>
-                                <a href="#" class="menuLink" id="share">Partager la gallerie</a>
-                            </div>
-                        </li>
-                        <li class="dropdown">
-                            <p class="display">
-                                <i class="fa-solid fa-bookmark"></i>
-                                Gallerie partagée
-                                </p>
-                            <div class="inner" id="categoryList">
-                                <a class="menuLink" id="seeShared" href="#">Voir la gallerie</a>
-                                <a class="menuLink" href="#">Ajouter un lien</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div id="content">
-                <div id="gallery">
-                    
-                </div>
-                <div id="addmodal" class="hidden">
-                    <div class="preview">
-                        <canvas id="preview"></canvas>
-                    </div>
-                    <div class="configurator">
-                        <form action="#">
-                        <input type="text" class="name" placeholder="Nom de l'accord">
-                        <div class="numbers">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                            <input type="text" name="" id="" maxlength="1" minlength="1" placeholder="x">
-                        </div>
-                        <div class="barre">
-                            <div class="top">
-                                <p>Accord barré</p>
-                                <input type="checkbox" name="" id="">
-                            </div>
-                            <div class="left">
-                                <p>Case début</p>
-                                <input type="number" name="" min="1" max="5" placeholder="1" id="">
-                            </div>
-                            <div class="center"><i class="fa-solid fa-arrow-right"></i></div>
-                            <div class="right">
-                                <p>Case fin</p>
-                                <input type="number" name="" min="2" max="6" placeholder="6" id="">
-                            </div>
-                        </div>
-                        <div class="moove">
-                            <p>Décaler l'accord</p>
-                            <input type="number" name="" id="" placeholder="0" min="0" max="20" class="case">
-                        </div>
-                        <div class="submit">Enregistrer</div>
-                        </form>
-                    </div>
-                </div>
-                <div id="copyTag">Copié !</div>
-            </div>
-        </div>
-    </div>
+    <div id="app" class="fr darkmode"></div>
 </body>
 </html>

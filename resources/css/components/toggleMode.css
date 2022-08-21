@@ -1,0 +1,27 @@
+.toggle-mode {
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 0;
+}
+.toggle-mode div {
+    aspect-ratio: 1;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    border-radius: 8px;
+}
+
+.toggle-mode div.active,
+.toggle-mode div:hover,
+.toggle-mode div:focus {
+    background-color: var(--background);
+}
+.lightmode .toggle-mode div {
+    background-color: var(--light-gray);
+}
+.lightmode .toggle-mode div.active {
+    background-color: var(--font-color);
+    color: #fff;
+}
