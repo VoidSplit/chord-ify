@@ -1,0 +1,17 @@
+.gallery-navigation {
+    justify-content: space-between;
+}
+.gallery-navigation .search-bar {
+    display: flex;
+}
+.gallery-navigation .search-bar input {
+    width: 500px;
+    padding: 5px 15px;
+}
+.gallery-navigation .btn {
+    background-color: var(--accent);
+    color: #fff;
+}
+.gallery-navigation .btn:hover {
+    background-color: var(--accent-hover);
+}
