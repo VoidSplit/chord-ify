@@ -40,7 +40,7 @@ function generateGalleryPage() {
             return Math.floor((1 + Math.random()) * 0x10000)
                 .toString(16)
                 .substring(1);
-          }
+        }
         let fixedId = id()
         DATA.groups.push({
             id: fixedId,
@@ -73,11 +73,11 @@ function addGroup(parent, id) {
 
     group.classList = "group fc opened";
     group.setAttribute('tabindex', "0")
+    group.setAttribute('style', "--outlineColor: var(--background)")
 
     groupTop.classList = "top fr"
 
-    DATA.groups.filter(g => g.id == id)[0].name = "Nouveau groupe"
-    console.log(DATA)
+    DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
     
     groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
 
@@ -91,10 +91,6 @@ function addGroup(parent, id) {
     groupTopActionsToggle.setAttribute('tabindex', "0")
     groupTopActionsToggle.innerHTML = `<i class="fa-solid fa-angle-down"></i>`
 
-    groupTopActionsToggle.addEventListener('click', (e) => {
-        group.classList.toggle('closed')
-        group.classList.toggle('opened')
-    })
 
     groupTopActionsFullscreen.classList = "fullscreen"
     groupTopActionsFullscreen.setAttribute('tabindex', "0")
@@ -103,6 +99,26 @@ function addGroup(parent, id) {
     groupTopActionsDelete.classList = "delete"
     groupTopActionsDelete.setAttribute('tabindex', "0")
     groupTopActionsDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
+
+
+    
+    groupTopActionsToggle.addEventListener('click', (e) => {
+        group.classList.toggle('closed')
+        group.classList.toggle('opened')
+    })
+
+    groupTopActionsModify.addEventListener('click', (e) => {
+        //DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau dossier')
+        openModifyGroupModal(id, group)
+        groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
+    })
+    groupTopActionsFullscreen.addEventListener('click', (e) => {
+        console.log("fullScreen")
+    })
+    groupTopActionsDelete.addEventListener('click', (e) => {
+        console.log('Delete')
+    })
+
 
     
     let inner = document.createElement('div')
@@ -130,36 +146,33 @@ function addGroup(parent, id) {
     parent.append(group)
 }
 
-function sortGroups() {
-    let name_const = []
-    let name_counter = {}  
-    let newList = [];  
-    
-    for (const i of Array(Object.keys(DATA.groups).length).keys()) {
-      name_const.push(DATA.groups[i].name)
-    }
-    
-    name_const.forEach(name => {
-      if(name == parseInt(name))
-        return;
-      if(!name_counter[name]) {
-        name_counter[name] = 1;
-        newList.push(name);
-      } else {
-         newList.push(`${name} (${name_counter[name]})`);
-         name_counter[name]++;
-      }
-    });
-    
-    for (const i of Array(Object.keys(DATA.groups).length).keys()) {
-      DATA.groups[i].name = (newList[i])
-    }
-    
-    
-    
-    console.log(DATA.groups)
+function modifyName(id, name) {
+    let groupList = [...DATA.groups.filter(g => g.id !== id)]
+    let list = []
+    groupList.forEach(el => { list.push(el.name) })
+    if(list.filter(e => e == name).length == 0) return DATA.groups.filter(g => g.id == id)[0].name = name
+        else {
+            let nameList = []
+            list.forEach(el => {
+                let arraySplitted = el.split(' ')
+                let last = arraySplitted[arraySplitted.length - 1]
+                if(last.substring(0,1) == "(") arraySplitted.pop()
+                let actualName = arraySplitted
+                nameList.push(actualName.join(' '))
+            })
+            return DATA.groups.filter(g => g.id == id)[0].name = `${name} (${nameList.filter(n => n == name).length})`
+        }
 }
-  
+
+function openModifyGroupModal(id, parent) {
+    /*let modal = document.createElement('div')
+    modal.classList = "modifyGroupModal fc"
+    let submitButton = document.createElement('div')
+    submitButton.classList = "btn"
+    submitButton.textContent = 'Valider'
+    modal.append(submitButton)
+    parent.append(modal)*/
+}
 function testPage() {
     let page = document.createElement('div')
     page.classList = "section fc"

@@ -1,7 +1,10 @@
 .group {
+    --outlineColor: #555555;
+    position: relative;
     background-color: var(--box);
     border-radius: 3px;
     padding: 15px 20px;
+    outline: 2px solid var(--outlineColor);
 }
 .group .top {
     padding: 0 2px;

@@ -19,7 +19,7 @@
     font-family: 'Nunito', sans-serif;
 }
 *:focus-visible {
-    outline: 2px solid var(--font-color);
+    outline: 2px solid var(--font-color) !important;
 }
 #app.darkmode {
     --background: #393d3f;
@@ -85,5 +85,4 @@
     gap: 20px;
     max-height: 100vh;
 }
-
 
