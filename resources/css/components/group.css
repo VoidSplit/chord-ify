@@ -11,6 +11,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.group .top p {
+    padding: 5px;
+}
 .group .top .actions {
     gap: 20px;
 }

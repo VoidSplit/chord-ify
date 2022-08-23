@@ -41,4 +41,68 @@
     background-color: var(--background-icons);
     border-radius: 5px;
     width: 50%;
+    padding: 50px 30px;
+    gap: 2px;
+    
+}
+
+#chord-page form input {
+    background-color: var(--background);
+    color: var(--font-color);
+    font-size: 1rem;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+#chord-page form .keys-wrapper {
+    gap: 5px;
+}
+#chord-page form .key {
+    text-align: center;
+}
+#chord-page .sumbit-wrapper {
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: auto 0 0 0;
+}
+#chord-page .sumbit-wrapper .btn {
+    border-radius: 3px;
+    width: 100%; color: #fff;
+}
+#chord-page .sumbit-wrapper .btn.cancel {
+    background-color: rgb(210, 54, 54);
+}
+#chord-page .sumbit-wrapper .btn.submit {
+    background-color: rgb(83, 156, 84);
+}
+#chord-page form .barres-wrapper {
+    gap: 5px;
+}
+#chord-page .barres-wrapper .btn {
+    background-color: var(--background);
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+#chord-page .barres-wrapper .btn:hover {
+    background-color: var(--background-icons);
+}
+.barreLine {
+    padding: 0 25px;
+    background-color: var(--background);
+    height: 36px;
+    border-radius: 3px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.barreLine input {
+    background-color: inherit !important;
+    height: 1.2.3rem;
+    background-color: var(--background-icons) !important;
+    padding: 2px 5px !important;
+    margin-bottom: 0 !important;
 }

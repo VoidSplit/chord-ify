@@ -206,10 +206,110 @@ function generateChordPage() {
     previewWrapper.classList = "preview-wrapper"
     
     let form = document.createElement('form')
-    form.classList = "form"
+    form.classList = "form fc"
 
     let canvas = document.createElement('canvas')
     canvas.setAttribute('id', "preview-canvas")
+
+
+
+    let formName = document.createElement('input')
+    let formNameLabel = document.createElement('p')
+    formNameLabel.classList = "label"
+    formNameLabel.textContent = "Nom de l'accord"
+
+    let formKeys = document.createElement('div')
+    formKeys.classList = "keys-wrapper fr"
+    for(let i = 0; i<6; i++) {
+        console.log(i)
+        let key = document.createElement('input')
+        key.classList = "key"
+        key.setAttribute('maxlength', "1")
+        key.setAttribute('placeholder', "x")
+        formKeys.append(key)
+    }
+
+    let barres = document.createElement('div')
+    barres.classList = 'fc barres-wrapper'
+    let barresLabel = document.createElement('div')
+    barresLabel.classList = 'label'
+    barresLabel.textContent = "Barrés"
+
+    let barresAdd = document.createElement('div')
+    barresAdd.classList = 'btn'
+    barresAdd.innerHTML = `<i class="fa-solid fa-plus"></i>`
+    barresAdd.setAttribute('tabindex','0')
+    barresAdd.addEventListener('click', (e) => {
+        console.log('test')
+        barres.insertBefore(addBarresLine(),barresAdd)
+        console.log(addBarresLine())
+    })
+
+    function addBarresLine() {
+        let line = document.createElement('div')
+        line.classList = "barreLine fr"
+        let lineFrom = document.createElement('input')
+        lineFrom.textContent = 0
+        let lineArrow = document.createElement('div')
+        lineArrow.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
+        let lineTo = document.createElement('input')
+        lineTo.textContent = 6
+        let lineOffset = document.createElement('input')
+        lineOffset.textContent = 0
+        let lineDelete = document.createElement('div')
+        lineDelete.classList = "lineDelete"
+        lineDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
+        line.append(lineFrom,lineArrow,lineTo,lineOffset,lineDelete)
+        return line
+    }
+    
+    let move = document.createElement('input')
+    let moveLabel = document.createElement('div')
+    move.classList = "move-input"
+    moveLabel.classList = "label"
+    moveLabel.textContent = "Décaler l'accord"
+
+
+    let groupSelect = document.createElement('div')
+    groupSelect.addEventListener('click', (e) => {
+        groupSelect.classList.remove('closed')
+    })
+    document.addEventListener('click', (e) => {
+        if(e.target !== groupDisplay) groupSelect.classList.add('closed')
+    })
+    let groupLabel = document.createElement('div')
+    groupSelect.classList = "groupSelect select closed"
+    groupLabel.classList = "label"
+    groupLabel.textContent = "Selectionner un groupe"
+    let groupDisplay = document.createElement('div')
+    let groupDisplayIcon = document.createElement('i')
+    let groupWrapper = document.createElement('div')
+    let groupLine = document.createElement('div')
+    groupDisplay.classList = "display fr"
+    groupWrapper.classList = "wrapper"
+    groupLine.classList = "line"
+    groupSelect.append(groupDisplay,groupWrapper)
+    groupDisplayIcon.classList = "fa-solid fa-angle-down"
+    groupDisplay.innerText = "Nouveau groupe"
+    groupLine.innerText = "Nouveau groupe (1)"
+    groupDisplay.append(groupDisplayIcon)
+    groupWrapper.append(groupLine)
+
+
+
+
+    let submitWrapper = document.createElement('div')
+    let submit = document.createElement('div')
+    let cancel = document.createElement('div')
+    submitWrapper.classList = "fr sumbit-wrapper"
+    submit.classList = 'btn submit'
+    cancel.classList = 'btn cancel'
+    submit.textContent = "Valider"
+    cancel.textContent = "Annuler"
+
+    form.append(formNameLabel,formName,formKeys,barresLabel,barres,moveLabel,move,groupLabel,groupSelect,submitWrapper)
+    submitWrapper.append(cancel,submit)
+    barres.append(barresAdd)
 
     page.append(configuratorWrapper)
     top.append(cross,text)

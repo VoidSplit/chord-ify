@@ -88,3 +88,42 @@
     max-height: 100vh;
 }
 
+.select {
+    background-color: var(--background);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.select .display {
+    padding: 10px 25px;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.select .display i {
+    transform: rotateZ(-180deg);
+    transition: transform .1s ease-in-out;
+}
+.select.closed .display i {
+    transform: rotateZ(0);
+}
+
+.select .wrapper {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(5 * (20px+1rem));
+    transition: max-height .2s ease-in-out;
+}
+
+.select .wrapper .line {
+    padding: 10px 25px;
+}
+.select .wrapper .line:hover {
+    background-color: var(--accent-hover);
+    color: #fff;
+}
+.select.closed .wrapper {
+    max-height: 0;
+}
