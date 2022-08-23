@@ -23,6 +23,9 @@ function generateGalleryPage() {
     let navigationSearchBarInput = document.createElement('input')
     let navigationButtonWrapper = document.createElement('div')
     let navigationButton = document.createElement('div')
+    let groupListElement = document.createElement('div')
+    groupListElement.classList = 'fc'
+    groupListElement.setAttribute('id', 'galeryGroupList')
 
     page.classList = "section fc";
 
@@ -44,108 +47,96 @@ function generateGalleryPage() {
         let fixedId = id()
         DATA.groups.push({
             id: fixedId,
+            index: DATA.groups.length,
             name: "",
+            opened: true,
             chords: []
         })
-        addGroup(page, fixedId)
+        displayGroups()
     })
 
-    page.append(navigation)
+    page.append(navigation,groupListElement)
     navigation.append(navigationSearchBar,navigationButtonWrapper)
     navigationSearchBar.append(navigationSearchBarInput)
     navigationButtonWrapper.append(navigationButton)
 
-    /**
-     * 
-     */
-
     return page
 }
-function addGroup(parent, id) {
-    let group = document.createElement('div')
-    let groupTop = document.createElement('div')
-    let groupTopP = document.createElement('p')
-    let groupTopActions = document.createElement('div')
-    let groupTopActionsModify = document.createElement('div')
-    let groupTopActionsToggle = document.createElement('div')
-    let groupTopActionsFullscreen = document.createElement('div')
-    let groupTopActionsDelete = document.createElement('div')
-
-    group.classList = "group fc opened";
-    group.setAttribute('tabindex', "0")
-    group.setAttribute('style', "--outlineColor: var(--background)")
-
-    groupTop.classList = "top fr"
-
-    DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
-    
-    groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
-
-    groupTopActions.classList = "actions fr"
-
-    groupTopActionsModify.classList = "modify"
-    groupTopActionsModify.setAttribute('tabindex', "0")
-    groupTopActionsModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
-
-    groupTopActionsToggle.classList = "close"
-    groupTopActionsToggle.setAttribute('tabindex', "0")
-    groupTopActionsToggle.innerHTML = `<i class="fa-solid fa-angle-down"></i>`
-
-
-    groupTopActionsFullscreen.classList = "fullscreen"
-    groupTopActionsFullscreen.setAttribute('tabindex', "0")
-    groupTopActionsFullscreen.innerHTML = `<i class="fa-solid fa-expand"></i>`
-
-    groupTopActionsDelete.classList = "delete"
-    groupTopActionsDelete.setAttribute('tabindex', "0")
-    groupTopActionsDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
-
-
-    
-    groupTopActionsToggle.addEventListener('click', (e) => {
-        group.classList.toggle('closed')
-        group.classList.toggle('opened')
-    })
-
-    groupTopActionsModify.addEventListener('click', (e) => {
-        //DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau dossier')
-        openModifyGroupModal(id, group)
+function displayGroups() {
+    let parent = document.getElementById('galeryGroupList')
+    parent.innerHTML = ''
+    DATA.groups.forEach(groupE => {
+        let id = groupE.id
+        let group = document.createElement('div')
+        let groupTop = document.createElement('div')
+        let groupTopP = document.createElement('p')
+        let groupTopActions = document.createElement('div')
+        let groupTopActionsModify = document.createElement('div')
+        let groupTopActionsToggle = document.createElement('div')
+        let groupTopActionsFullscreen = document.createElement('div')
+        let groupTopActionsDelete = document.createElement('div')
+        if(groupE.opened == true) group.classList = "group fc opened";
+        else group.classList = "group fc closed";
+        group.setAttribute('tabindex', "0")
+        group.setAttribute('style', "--outlineColor: var(--background)")
+        groupTop.classList = "top fr"
+        DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
         groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
+        groupTopActions.classList = "actions fr"
+        groupTopActionsModify.classList = "modify"
+        groupTopActionsModify.setAttribute('tabindex', "0")
+        groupTopActionsModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
+        groupTopActionsToggle.classList = "close"
+        groupTopActionsToggle.setAttribute('tabindex', "0")
+        groupTopActionsToggle.innerHTML = `<i class="fa-solid fa-angle-down"></i>`
+        groupTopActionsFullscreen.classList = "fullscreen"
+        groupTopActionsFullscreen.setAttribute('tabindex', "0")
+        groupTopActionsFullscreen.innerHTML = `<i class="fa-solid fa-expand"></i>`
+        groupTopActionsDelete.classList = "delete"
+        groupTopActionsDelete.setAttribute('tabindex', "0")
+        groupTopActionsDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
+        groupTopActionsToggle.addEventListener('click', (e) => {
+            group.classList.toggle('closed')
+            group.classList.toggle('opened')
+            if(DATA.groups.filter(g => g.id == id)[0].opened == true) {
+                DATA.groups.filter(g => g.id == id)[0].opened = false
+            }
+            else if(DATA.groups.filter(g => g.id == id)[0].opened == false) {
+                DATA.groups.filter(g => g.id == id)[0].opened = true
+            }
+        })
+        groupTopActionsModify.addEventListener('click', (e) => {
+            openModifyGroupModal(id, group)
+            groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
+        })
+        groupTopActionsFullscreen.addEventListener('click', (e) => {
+            console.log("fullScreen")
+        })
+        groupTopActionsDelete.addEventListener('click', (e) => {
+            let newList = DATA.groups.filter(g => g.id !== id);
+            DATA.groups = []
+            DATA.groups.push(...newList)
+            displayGroups()
+        })
+        let inner = document.createElement('div')
+        inner.classList = "inner fr horizontal-scroll"
+        let addChord = document.createElement('div')
+        addChord.classList = "add-chord fc"
+        addChord.setAttribute('tabindex', "0")
+        addChord.innerHTML = `
+            <div class="center"><i class="fa-solid fa-square-plus"></i></div>
+            <p>Ajouter un accord</p>
+        `
+        addChord.addEventListener('click', (e) => {
+            console.log(DATA, id)
+        })
+        group.append(groupTop, inner)
+        groupTop.append(groupTopP,groupTopActions)
+        groupTopActions.append(groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsModify,groupTopActionsDelete)
+        inner.append(addChord)
+        parent.append(group)
     })
-    groupTopActionsFullscreen.addEventListener('click', (e) => {
-        console.log("fullScreen")
-    })
-    groupTopActionsDelete.addEventListener('click', (e) => {
-        console.log('Delete')
-    })
-
-
-    
-    let inner = document.createElement('div')
-    inner.classList = "inner fr horizontal-scroll"
-
-    let addChord = document.createElement('div')
-    addChord.classList = "add-chord fc"
-    addChord.setAttribute('tabindex', "0")
-    addChord.innerHTML = `
-        <div class="center"><i class="fa-solid fa-square-plus"></i></div>
-        <p>Ajouter un accord</p>
-    `
-
-    addChord.addEventListener('click', (e) => {
-        console.log(DATA, id)
-    })
-
-
-    group.append(groupTop, inner)
-    groupTop.append(groupTopP,groupTopActions)
-    groupTopActions.append(groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsModify,groupTopActionsDelete)
-    inner.append(addChord)
-
-
-    parent.append(group)
 }
-
 function modifyName(id, name) {
     let groupList = [...DATA.groups.filter(g => g.id !== id)]
     let list = []

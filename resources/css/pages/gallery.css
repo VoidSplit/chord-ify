@@ -15,3 +15,7 @@
 .gallery-navigation .btn:hover {
     background-color: var(--accent-hover);
 }
+
+#galeryGroupList {
+    gap: 20px;
+}
