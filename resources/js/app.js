@@ -9,6 +9,7 @@ init()
 
 const DATA = {
     groups: [],
+    searchList: [],
     theme: "dark"
 }
 
@@ -37,7 +38,6 @@ function generateGalleryPage() {
     navigationButton.classList = "btn"
     navigationButton.innerText = "Ajouter un groupe"
     navigationButton.setAttribute('tabindex', "0")
-
     navigationButton.addEventListener('click', (e) => {
         let id = () => {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -53,7 +53,18 @@ function generateGalleryPage() {
             color: "var(--background)",
             chords: []
         })
-        displayGroups()
+        displayGroups(DATA)
+    })
+    navigationSearchBarInput.addEventListener('input', (e) => {
+        let inputValue = e.target.value
+        inputValue = inputValue.toLowerCase()
+        let filter = {
+            groups: []
+        }
+        let arr = DATA.groups.filter(g => g.name.toLowerCase().includes(inputValue))
+        if(arr.length !== 0) filter.groups.push(...DATA.groups.filter(g => g.name.toLowerCase().includes(inputValue)))
+        console.log(filter)
+        displayGroups(filter)
     })
 
     page.append(navigation,groupListElement)
@@ -63,10 +74,11 @@ function generateGalleryPage() {
 
     return page
 }
-function displayGroups() {
+function displayGroups(data) {
+    if(!data) data = DATA
     let parent = document.getElementById('galeryGroupList')
     parent.innerHTML = ''
-    DATA.groups.forEach(groupE => {
+    data.groups.forEach(groupE => {
         let id = groupE.id
         let group = document.createElement('div')
         let groupTop = document.createElement('div')
@@ -79,12 +91,12 @@ function displayGroups() {
         if(groupE.opened == true) group.classList = "group fc opened";
         else group.classList = "group fc closed";
         group.setAttribute('tabindex', "0")
-        group.setAttribute('style',`--outlineColor: ${DATA.groups.filter(g => g.id == id)[0].color}`)
+        group.setAttribute('style',`--outlineColor: ${data.groups.filter(g => g.id == id)[0].color}`)
         groupTop.classList = "top fr"
-        if(DATA.groups.filter(g => g.id == id)[0].name == "") DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
-        groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
+        if(data.groups.filter(g => g.id == id)[0].name == "") data.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
+        groupTopP.textContent = data.groups.filter(g => g.id == id)[0].name 
         groupTopP.setAttribute('contenteditable', true)
-        groupTopP.addEventListener('input', (e) => { DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, e.target.innerText) })
+        groupTopP.addEventListener('input', (e) => { data.groups.filter(g => g.id == id)[0].name = modifyName(id, e.target.innerText) })
         groupTopActions.classList = "actions fr"
         groupTopActionsColor.classList = "color fr"
         let colorList = [
@@ -95,7 +107,6 @@ function displayGroups() {
             "var(--background)"
         ]
         colorList.forEach(color => {
-            console.log(DATA)
             let square = document.createElement('div')
             square.setAttribute('tabindex', '0')
             square.classList = "colorPixel"
@@ -103,7 +114,7 @@ function displayGroups() {
             groupTopActionsColor.append(square)
             square.addEventListener('click', (e) => {
                 group.setAttribute('style',`--outlineColor: ${color}`)
-                DATA.groups.filter(g => g.id == id)[0].color = color
+                data.groups.filter(g => g.id == id)[0].color = color
             })
         })
         groupTopActionsToggle.classList = "close"
@@ -118,20 +129,20 @@ function displayGroups() {
         groupTopActionsToggle.addEventListener('click', (e) => {
             group.classList.toggle('closed')
             group.classList.toggle('opened')
-            if(DATA.groups.filter(g => g.id == id)[0].opened == true) {
-                DATA.groups.filter(g => g.id == id)[0].opened = false
+            if(data.groups.filter(g => g.id == id)[0].opened == true) {
+                data.groups.filter(g => g.id == id)[0].opened = false
             }
-            else if(DATA.groups.filter(g => g.id == id)[0].opened == false) {
-                DATA.groups.filter(g => g.id == id)[0].opened = true
+            else if(data.groups.filter(g => g.id == id)[0].opened == false) {
+                data.groups.filter(g => g.id == id)[0].opened = true
             }
         })
         groupTopActionsFullscreen.addEventListener('click', (e) => {
             console.log("fullScreen")
         })
         groupTopActionsDelete.addEventListener('click', (e) => {
-            let newList = DATA.groups.filter(g => g.id !== id);
-            DATA.groups = []
-            DATA.groups.push(...newList)
+            let newList = data.groups.filter(g => g.id !== id);
+            data.groups = []
+            data.groups.push(...newList)
             displayGroups()
         })
         let inner = document.createElement('div')
@@ -144,7 +155,7 @@ function displayGroups() {
             <p>Ajouter un accord</p>
         `
         addChord.addEventListener('click', (e) => {
-            console.log(DATA, id)
+            console.log(data, id)
         })
         group.append(groupTop, inner)
         groupTop.append(groupTopP,groupTopActions)
