@@ -50,6 +50,7 @@ function generateGalleryPage() {
             index: DATA.groups.length,
             name: "",
             opened: true,
+            color: "var(--background)",
             chords: []
         })
         displayGroups()
@@ -71,21 +72,40 @@ function displayGroups() {
         let groupTop = document.createElement('div')
         let groupTopP = document.createElement('p')
         let groupTopActions = document.createElement('div')
-        let groupTopActionsModify = document.createElement('div')
+        let groupTopActionsColor = document.createElement('div')
         let groupTopActionsToggle = document.createElement('div')
         let groupTopActionsFullscreen = document.createElement('div')
         let groupTopActionsDelete = document.createElement('div')
         if(groupE.opened == true) group.classList = "group fc opened";
         else group.classList = "group fc closed";
         group.setAttribute('tabindex', "0")
-        group.setAttribute('style', "--outlineColor: var(--background)")
+        group.setAttribute('style',`--outlineColor: ${DATA.groups.filter(g => g.id == id)[0].color}`)
         groupTop.classList = "top fr"
-        DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
+        if(DATA.groups.filter(g => g.id == id)[0].name == "") DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, 'Nouveau groupe')
         groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
+        groupTopP.setAttribute('contenteditable', true)
+        groupTopP.addEventListener('input', (e) => { DATA.groups.filter(g => g.id == id)[0].name = modifyName(id, e.target.innerText) })
         groupTopActions.classList = "actions fr"
-        groupTopActionsModify.classList = "modify"
-        groupTopActionsModify.setAttribute('tabindex', "0")
-        groupTopActionsModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
+        groupTopActionsColor.classList = "color fr"
+        let colorList = [
+            "#FA8072",
+            "#FFC300 ",
+            "#DAF7A6",
+            "#5DADE2",
+            "var(--background)"
+        ]
+        colorList.forEach(color => {
+            console.log(DATA)
+            let square = document.createElement('div')
+            square.setAttribute('tabindex', '0')
+            square.classList = "colorPixel"
+            square.style.backgroundColor = color;
+            groupTopActionsColor.append(square)
+            square.addEventListener('click', (e) => {
+                group.setAttribute('style',`--outlineColor: ${color}`)
+                DATA.groups.filter(g => g.id == id)[0].color = color
+            })
+        })
         groupTopActionsToggle.classList = "close"
         groupTopActionsToggle.setAttribute('tabindex', "0")
         groupTopActionsToggle.innerHTML = `<i class="fa-solid fa-angle-down"></i>`
@@ -104,10 +124,6 @@ function displayGroups() {
             else if(DATA.groups.filter(g => g.id == id)[0].opened == false) {
                 DATA.groups.filter(g => g.id == id)[0].opened = true
             }
-        })
-        groupTopActionsModify.addEventListener('click', (e) => {
-            openModifyGroupModal(id, group)
-            groupTopP.textContent = DATA.groups.filter(g => g.id == id)[0].name 
         })
         groupTopActionsFullscreen.addEventListener('click', (e) => {
             console.log("fullScreen")
@@ -132,7 +148,7 @@ function displayGroups() {
         })
         group.append(groupTop, inner)
         groupTop.append(groupTopP,groupTopActions)
-        groupTopActions.append(groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsModify,groupTopActionsDelete)
+        groupTopActions.append(groupTopActionsColor,groupTopActionsToggle,groupTopActionsFullscreen,groupTopActionsDelete)
         inner.append(addChord)
         parent.append(group)
     })

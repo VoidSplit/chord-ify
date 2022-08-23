@@ -23,6 +23,10 @@
     font-size: 1rem;
 }
 
+.group .top .actions .color {
+    aspect-ratio: inherit;
+    gap: 10px;
+}
 .group .top .actions .close {
     transition: transform .1s ease-in-out;
 }
