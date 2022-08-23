@@ -1,17 +1,18 @@
 function init() {
     displayElementTo(getSidebar(), document.getElementById('app'))
-    displayElementTo(generateGalleryPage(), document.getElementById('app'))
+    openPage(generateGalleryPage())
+
 }
 function displayElementTo(element, parent)  {
     parent.appendChild(element)
 }
-init()
 
 const DATA = {
     groups: [],
     searchList: [],
     theme: "dark"
 }
+init()
 
 function generateGalleryPage() {
     let page = document.createElement('div')
@@ -56,14 +57,11 @@ function generateGalleryPage() {
         displayGroups(DATA)
     })
     navigationSearchBarInput.addEventListener('input', (e) => {
-        let inputValue = e.target.value
+        let inputValue = e.target.value;
         inputValue = inputValue.toLowerCase()
-        let filter = {
-            groups: []
-        }
+        let filter = { groups: [] }
         let arr = DATA.groups.filter(g => g.name.toLowerCase().includes(inputValue))
         if(arr.length !== 0) filter.groups.push(...DATA.groups.filter(g => g.name.toLowerCase().includes(inputValue)))
-        console.log(filter)
         displayGroups(filter)
     })
 
@@ -155,7 +153,7 @@ function displayGroups(data) {
             <p>Ajouter un accord</p>
         `
         addChord.addEventListener('click', (e) => {
-            console.log(data, id)
+            openPage(generateChordPage())
         })
         group.append(groupTop, inner)
         groupTop.append(groupTopP,groupTopActions)
@@ -181,16 +179,53 @@ function modifyName(id, name) {
             return DATA.groups.filter(g => g.id == id)[0].name = `${name} (${nameList.filter(n => n == name).length})`
         }
 }
+function generateChordPage() {
 
-function openModifyGroupModal(id, parent) {
-    /*let modal = document.createElement('div')
-    modal.classList = "modifyGroupModal fc"
-    let submitButton = document.createElement('div')
-    submitButton.classList = "btn"
-    submitButton.textContent = 'Valider'
-    modal.append(submitButton)
-    parent.append(modal)*/
+    let page = document.createElement('div')
+    page.classList = "section fc";
+    page.setAttribute('id', 'chord-page')
+
+    let top = document.createElement('div')
+    top.classList = "fr-r top"
+    let text = document.createElement('span')
+    text.textContent = 'Configurer l\'accord'
+    let cross = document.createElement('i')
+    cross.classList = "fa-solid fa-xmark"
+    cross.addEventListener('click', (e) => {
+        openPage(generateGalleryPage())
+        displayGroups(DATA)
+    })
+
+    let configuratorWrapper = document.createElement('div')
+    configuratorWrapper.classList = "fc configurator-wrapper"
+
+    let inner = document.createElement('div')
+    inner.classList = "inner fr"
+
+    let previewWrapper = document.createElement('div')
+    previewWrapper.classList = "preview-wrapper"
+    
+    let form = document.createElement('form')
+    form.classList = "form"
+
+    let canvas = document.createElement('canvas')
+    canvas.setAttribute('id', "preview-canvas")
+
+    page.append(configuratorWrapper)
+    top.append(cross,text)
+    configuratorWrapper.append(top,inner)
+    inner.append(previewWrapper,form)
+    previewWrapper.append(canvas)
+
+    return page
 }
+function openPage(page) {
+    let app = document.getElementById('app')
+    let section = document.querySelectorAll('.section')
+    if(section.length !== 0) app.removeChild(section[0])
+    displayElementTo(page, app)
+}
+
 function testPage() {
     let page = document.createElement('div')
     page.classList = "section fc"

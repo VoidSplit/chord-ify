@@ -15,8 +15,8 @@
 }
 .sidebar .top .logo {
     display: flex;
-    aspect-ratio: 1;
     height: 60px;
+    width: 60px;
 }
 .sidebar ul {
     padding: 20px 20px 0 20px;

@@ -1,0 +1,44 @@
+
+#chord-page .top {
+    justify-content: space-between;
+    font-weight: 700;
+    align-items: center;
+}
+#chord-page .top span {
+    padding: 0 5px;
+}
+#chord-page .top i {
+    aspect-ratio: 1;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+#chord-page .configurator-wrapper {
+    background-color: var(--box);
+    height: 100%;
+    border-radius: 5px;
+    padding: 10px 15px;
+    gap: 20px;
+}
+#chord-page .inner {
+    height: 100%;
+}
+#chord-page .inner .preview-wrapper {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#chord-page canvas {
+    background-color: #fff;
+    border-radius: 5px;
+    aspect-ratio: 1/1.7;
+}
+#chord-page .inner form {
+    background-color: var(--background-icons);
+    border-radius: 5px;
+    width: 50%;
+}

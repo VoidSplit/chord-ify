@@ -9,6 +9,7 @@
 .group .top {
     padding: 0 2px;
     justify-content: space-between;
+    align-items: center;
 }
 .group .top .actions {
     gap: 20px;
