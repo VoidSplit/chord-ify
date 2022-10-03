@@ -204,7 +204,7 @@ function init() {
     searchbar.addEventListener('input', (e) => {
         let value = e.target.value
 
-        console.log(value)
+        drawGroups(GROUPLIST.filter(group => group.name.toLowerCase().includes(value.toLowerCase())))
     })
     
     addGroupButton.addEventListener('click', (e) => {
