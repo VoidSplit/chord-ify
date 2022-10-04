@@ -313,6 +313,10 @@ function init() {
         lineFromInput.setAttribute('max', '5')
         lineToInput.setAttribute('max', '6')
         lineMove.setAttribute('max', '3')
+        
+        lineFromInput.setAttribute('placeholder', '1')
+        lineToInput.setAttribute('placeholder', '6')
+        lineMove.setAttribute('placeholder', '0')
 
         lineFromInput.setAttribute('min', '1')
         lineToInput.setAttribute('min', '2')
@@ -325,32 +329,56 @@ function init() {
         lineDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
 
         let newBarre = {
-            from: lineFromInput.value,
-            to: lineToInput.value,
-            move: lineMove.value
+            from: lineFromInput.value, // "1"
+            to: lineToInput.value, // "6"
+            move: lineMove.value // "0"
         }
         console.log(newBarre)
         chord.barres.push(newBarre)
         drawChord(canvas, chord)
         lineFromInput.addEventListener('input', (e) => {
             let value = parseInt(e.target.value)
-            //console.log(parseInt(newBarre.from) < parseInt(newBarre.to) - 1, parseInt(newBarre.from) >= 1, parseInt(newBarre.to) <= 6)
-            //console.log(parseInt(newBarre.from), parseInt(newBarre.to), parseInt(newBarre.move))
-            if(((parseInt(newBarre.from) > 0) && (parseInt(newBarre.to) > 0)) && (parseInt(newBarre.from) < parseInt(newBarre.to)) && ((parseInt(newBarre.from) < 6) && (parseInt(newBarre.to) <= 6))) {
+            if(!value) value = 1
+            if(value < parseInt(newBarre.to) && value >= 1 && value <= 6) {
                 newBarre.from = value
                 drawChord(canvas, chord)
                 e.target.classList.remove('error')
-            } else e.target.classList.add('error')
+            } else  {
+                e.target.classList.add('error')
+                value = 1
+                newBarre.from = value
+                drawChord(canvas, chord)
+            }
         })
+        
         lineToInput.addEventListener('input', (e) => {
             let value = parseInt(e.target.value)
-            newBarre.to = value
-            drawChord(canvas, chord)
+            if(!value) value = 6
+            if(value > parseInt(newBarre.from) && value >= 1 && value <= 6) {
+                newBarre.to = value
+                drawChord(canvas, chord)
+                e.target.classList.remove('error')
+            } else  {
+                e.target.classList.add('error')
+                value = 6
+                newBarre.to = value
+                drawChord(canvas, chord)
+            }
         })
+        
         lineMove.addEventListener('input', (e) => {
             let value = parseInt(e.target.value)
-            newBarre.move = value
-            drawChord(canvas, chord)
+            if(!value) value = 0
+            if(value >= 0 && value <= 3) {
+                newBarre.move = value
+                drawChord(canvas, chord)
+                e.target.classList.remove('error')
+            } else {
+                e.target.classList.add('error')
+                value = 0
+                newBarre.move = value
+                drawChord(canvas, chord)
+            }
         })
         lineDelete.addEventListener('click', (e) => {
             barreInner.removeChild(line)
