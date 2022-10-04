@@ -90,6 +90,11 @@ input[type="number"] {
     max-width: 500px;
     border: none;
 }
+input[type="text"].error, 
+input[type="number"].error {
+    outline: 2px solid var(--preset-color-red);
+    background-color: #A31621;
+}
 .btn {
     display: flex;
     align-items: center;

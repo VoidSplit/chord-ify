@@ -251,18 +251,7 @@ function init() {
     let chord = {
         name: "Nom de l'accord",
         keys: "000000",
-        barres: [
-            /*{
-                from: 1,
-                to: 6,
-                move: 1
-            },
-            {
-                from: 3,
-                to: 5,
-                move: 3
-            }*/
-        ],
+        barres: [],
         move: 0
     }
     
@@ -275,19 +264,31 @@ function init() {
     let previewMove = document.getElementById('move')
     previewMove.addEventListener('input', (e) => {
         let value = e.target.value
-        chord.move = value
-        drawChord(canvas, chord)
+        if(value <= 20 && value >= 0) {
+            chord.move = value
+            e.target.classList.remove('error')
+            drawChord(canvas, chord)
+        } else {
+            e.target.classList.add('error')
+        }
     })
     let previewKeys = document.getElementById('keys')
 
     
     for(key of previewKeys.children) {
         key.addEventListener('input', (e) => {
-            let index = e.target.getAttribute("data-index")
-            let splitted = chord.keys.split('')
-            splitted[parseInt(index)] = e.target.value
-            chord.keys = splitted.join('')
-            drawChord(canvas, chord)
+            let value = e.target.value.toLowerCase()
+            let test = ["0", "1", "2", "3", "4", "x"]
+            if (value == "") value = "0"
+            if (test.includes(value)) {
+                let index = e.target.getAttribute("data-index")
+                let splitted = chord.keys.split('')
+                splitted[parseInt(index)] = value
+                chord.keys = splitted.join('')
+                drawChord(canvas, chord)
+                e.target.classList.remove('error')
+            } else 
+                e.target.classList.add('error')
         })
     }
 
@@ -317,9 +318,9 @@ function init() {
         lineToInput.setAttribute('min', '2')
         lineMove.setAttribute('min', '0')
 
-        lineFromInput.value = "1"
-        lineToInput.value = "6"
-        lineMove.value = "0"
+        lineFromInput.value = '1'
+        lineToInput.value = '6'
+        lineMove.value = '0'
 
         lineDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
 
@@ -328,24 +329,29 @@ function init() {
             to: lineToInput.value,
             move: lineMove.value
         }
+        console.log(newBarre)
         chord.barres.push(newBarre)
         drawChord(canvas, chord)
         lineFromInput.addEventListener('input', (e) => {
-            let value = e.target.value
-            newBarre.from = parseInt(value)
-            drawChord(canvas, chord)
+            let value = parseInt(e.target.value)
+            //console.log(parseInt(newBarre.from) < parseInt(newBarre.to) - 1, parseInt(newBarre.from) >= 1, parseInt(newBarre.to) <= 6)
+            //console.log(parseInt(newBarre.from), parseInt(newBarre.to), parseInt(newBarre.move))
+            if(((parseInt(newBarre.from) > 0) && (parseInt(newBarre.to) > 0)) && (parseInt(newBarre.from) < parseInt(newBarre.to)) && ((parseInt(newBarre.from) < 6) && (parseInt(newBarre.to) <= 6))) {
+                newBarre.from = value
+                drawChord(canvas, chord)
+                e.target.classList.remove('error')
+            } else e.target.classList.add('error')
         })
         lineToInput.addEventListener('input', (e) => {
-            let value = e.target.value
-            newBarre.to = parseInt(value)
+            let value = parseInt(e.target.value)
+            newBarre.to = value
             drawChord(canvas, chord)
         })
         lineMove.addEventListener('input', (e) => {
-            let value = e.target.value
-            newBarre.move = parseInt(value)
+            let value = parseInt(e.target.value)
+            newBarre.move = value
             drawChord(canvas, chord)
         })
-
         lineDelete.addEventListener('click', (e) => {
             barreInner.removeChild(line)
             chord.barres = chord.barres.filter(barre => barre !== newBarre)
