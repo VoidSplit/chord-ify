@@ -308,7 +308,43 @@ function init() {
         lineFromInput.setAttribute('type', 'number')
         lineToInput.setAttribute('type', 'number')
         lineMove.setAttribute('type', 'number')
+        
+        lineFromInput.setAttribute('max', '5')
+        lineToInput.setAttribute('max', '6')
+        lineMove.setAttribute('max', '3')
+
+        lineFromInput.setAttribute('min', '1')
+        lineToInput.setAttribute('min', '2')
+        lineMove.setAttribute('min', '0')
+
+        lineFromInput.value = "1"
+        lineToInput.value = "6"
+        lineMove.value = "0"
+
         lineDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
+
+        let newBarre = {
+            from: lineFromInput.value,
+            to: lineToInput.value,
+            move: lineMove.value
+        }
+        chord.barres.push(newBarre)
+        drawChord(canvas, chord)
+        lineFromInput.addEventListener('input', (e) => {
+            let value = e.target.value
+            newBarre.from = parseInt(value)
+            drawChord(canvas, chord)
+        })
+        lineToInput.addEventListener('input', (e) => {
+            let value = e.target.value
+            newBarre.to = parseInt(value)
+            drawChord(canvas, chord)
+        })
+        lineMove.addEventListener('input', (e) => {
+            let value = e.target.value
+            newBarre.move = parseInt(value)
+            drawChord(canvas, chord)
+        })
 
         lineDelete.addEventListener('click', (e) => {
             barreInner.removeChild(line)

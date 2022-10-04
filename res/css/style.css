@@ -296,6 +296,9 @@ input[type="number"] {
     border: none;
     height: inherit;
 }
+.barre-inner .line .delete {
+    cursor: pointer;
+}
 .barre-inner .line .delete,
 .barre-inner .line i {
     display: flex;
