@@ -95,8 +95,8 @@ class group {
             let element = document.createElement('div')
             element.classList = `color ${color.name}`
             DOMGroupDisplayColorsWrapper.append(element)
-            element.addEventListener('click', (e) => {
-                this.color = color.name;
+            element.addEventListener('click', () => {
+                this.color = color.name
                 this.update()
             })
         })
@@ -106,11 +106,11 @@ class group {
         parent.append(DOMGroup)
     }
     
-    debounce(func, timeout = 300){
+    debounce(func, timeout = 600){
         let timer;
         return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            clearTimeout(timer)
+            timer = setTimeout(() => { func.apply(this, args) }, timeout)
         };
     }
     saveInput(evt){
@@ -132,7 +132,7 @@ function drawGroups(group) {
     updateGroupsDromdown()
 }
 
-function openChordCreator(id) {
+function openChordCreator() {
     let app = document.getElementById('app')
     app.toggleAttribute('data-ChordCreatorOpened')
 }
@@ -217,7 +217,7 @@ function updateGroupsDromdown(main) {
         ulLi.append(ulLiP)
         ul.append(ulLi)
         ulLiP.textContent = group.name;
-        ulLi.addEventListener('click', (e) => {
+        ulLi.addEventListener('click', () => {
             updateGroupsDromdown(group.name)
         })
     })
@@ -232,8 +232,7 @@ function init() {
         drawGroups(GROUPLIST.filter(group => group.name.toLowerCase().includes(value.toLowerCase())))
     })
     
-    addGroupButton.addEventListener('click', (e) => {
-        let groupsDromdown = document.getElementById('groupsDropdown')
+    addGroupButton.addEventListener('click', () => {
         let id = 0;
         while(IDLIST.includes(id)) {
             id++
@@ -294,7 +293,7 @@ function init() {
 
     let addBarre = document.getElementById('addBarre')
     let barreInner = document.getElementById('barreInner')
-    addBarre.addEventListener('click', (e) => {
+    addBarre.addEventListener('click', () => {
         let line = document.createElement('div')
         let lineFromInput = document.createElement('input')
         let lineI = document.createElement('i')
@@ -319,8 +318,6 @@ function init() {
 
         barreInner.insertBefore(line, addBarre)
     })
-
-
 
     drawChord(canvas, chord)
 }
