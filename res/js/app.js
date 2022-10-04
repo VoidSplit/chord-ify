@@ -348,6 +348,8 @@ function init() {
 
         lineDelete.addEventListener('click', (e) => {
             barreInner.removeChild(line)
+            chord.barres = chord.barres.filter(barre => barre !== newBarre)
+            drawChord(canvas, chord)
         })
 
         line.append(lineFromInput,lineI,lineToInput,lineMove,lineDelete)
