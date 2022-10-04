@@ -129,6 +129,7 @@ function drawGroups(group) {
     group.forEach(group => {
         group.display(groupListDOM)
     })
+    updateGroupsDromdown()
 }
 
 function openChordCreator(id) {
@@ -197,17 +198,42 @@ function drawChord(canvas, chord) {
         ctx.fillText(chord.move, 15, (((250/4) * 2) + 10) - ((250/4) / 2) + 4)
     }
 }
+function updateGroupsDromdown(main) {
+    let groupsDropdown = document.getElementById('groupsDropdown')
+    groupsDropdown.innerHTML = ""
+    let display = document.createElement('div')
+    let displayP = document.createElement('p')
+    let ul = document.createElement('ul')
 
+    display.classList = "display"
+    ul.classList = "fc"
+
+    if(main == undefined) main = GROUPLIST[0].name
+    displayP.textContent = main
+
+    GROUPLIST.filter(group => group.name !== main).forEach(group => {
+        let ulLi = document.createElement('li')
+        let ulLiP = document.createElement('p')
+        ulLi.append(ulLiP)
+        ul.append(ulLi)
+        ulLiP.textContent = group.name;
+        ulLi.addEventListener('click', (e) => {
+            updateGroupsDromdown(group.name)
+        })
+    })
+    display.append(displayP)
+    groupsDropdown.append(display,ul)
+}
 function init() {
 
     let searchbar = document.getElementById('searchbar')
     searchbar.addEventListener('input', (e) => {
         let value = e.target.value
-
         drawGroups(GROUPLIST.filter(group => group.name.toLowerCase().includes(value.toLowerCase())))
     })
     
     addGroupButton.addEventListener('click', (e) => {
+        let groupsDromdown = document.getElementById('groupsDropdown')
         let id = 0;
         while(IDLIST.includes(id)) {
             id++
@@ -215,6 +241,7 @@ function init() {
         IDLIST.push(id)
         let nGroup = new group(COLORS[4].name, id, "Nouveau Groupe", [], true)
         GROUPLIST.push(nGroup)
+        updateGroupsDromdown()
         drawGroups(GROUPLIST)
     })
 
@@ -292,6 +319,9 @@ function init() {
 
         barreInner.insertBefore(line, addBarre)
     })
+
+
+
     drawChord(canvas, chord)
 }
 init()
