@@ -1,10 +1,4 @@
 
-let addBarre = document.getElementById('addBarre')
-let barreInner = document.getElementById('barreInner')
-addBarre.addEventListener('click', (e) => {
-    console.log('test')
-})
-
 
 const COLORS = [
     {name: "red", variableName: "preset-color-red", code: "rgb(250, 128, 114)"},
@@ -104,7 +98,7 @@ class group {
             }, 190)
         })
         
-        /*this.chords.forEach(ch => {
+        this.chords.forEach(ch => {
             let card = document.createElement('div')
             let can = document.createElement('canvas')
             let canctx = can.getContext('2d')
@@ -145,7 +139,6 @@ class group {
             formatedKeys.forEach((key, i) => {
                 key = key.toLowerCase()
                 if(key !== "x" && key !== "0") {
-                
                     canctx.beginPath();
                     canctx.arc(
                         (((can.width - 80) / 5) * (i + 1)) + 16,
@@ -157,10 +150,10 @@ class group {
                 }
             })
             // Draw barre
-            /*ch.barres.forEach(barre => {
+            ch.barres.forEach(barre => {
                 canctx.roundRect(
-                    (((can.width - 80) / 5) * (barre.from) - 8), 
-                    (((250/4) * (barre.move+2)) - 4.5) - ((250/4) / 2) + 4, 
+                    (((can.width - 80) / 5) * (barre.from) + 8), 
+                    (((180/4) * (barre.move+2)) - 4.5) - ((180/4) / 2) + 15, 
                     (((can.width - 80) / 5) * (barre.to) - 8) - (((can.width - 80) / 5) * (barre.from -1)), 
                     20, 
                     80
@@ -171,7 +164,7 @@ class group {
             console.log(ch)
             DOMGroupChordListInner.append(card)
             card.append(can)
-        })*/
+        })
 
         DOMGroupDisplayName.addEventListener('input', this.debounce((e) => this.saveInput(e)))
 
@@ -233,7 +226,13 @@ function openChordCreator() {
     for(key of previewKeys.children) {
         key.value = ""
     }
-    barreInner.innerHTML = `<div class="btn" id="addBarre">+</div>`
+    for(i of barreInner.children) {
+        if(i.id !== "addBarre") {
+            barreInner.removeChild(i)
+        }
+    }
+
+
 
     let app = document.getElementById('app')
     app.toggleAttribute('data-ChordCreatorOpened')
@@ -394,7 +393,11 @@ for(key of previewKeys.children) {
             e.target.classList.add('error')
     })
 }
-/*addBarre.addEventListener('click', () => {
+let addBarre = document.getElementById('addBarre')
+let barreInner = document.getElementById('barreInner')
+
+
+addBarre.addEventListener('click', () => {
     console.log('test')
     let line = document.createElement('div')
     let lineFromInput = document.createElement('input')
@@ -481,7 +484,7 @@ for(key of previewKeys.children) {
     })
     line.append(lineFromInput,lineI,lineToInput,lineMove,lineDelete)
     barreInner.insertBefore(line, addBarre)
-})*/
+})
 let submitButton = document.getElementById('submitBtn')
 submitButton.addEventListener('click', (e) => {
     let id = 0;
