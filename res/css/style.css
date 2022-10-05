@@ -30,6 +30,17 @@
 
 }
 
+::-webkit-scrollbar {
+    background-color: var(--light-background);
+    border-radius: 5px;
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--box-dark-background);
+    border-radius: 5px;
+}
+
 .fr { display: flex; flex-direction: row }
 .frr { display: flex; flex-direction: row-reverse }
 .fc { display: flex; flex-direction: column }
@@ -207,14 +218,29 @@ input[type="number"].error {
 .group .chord-list {
     height: 100%;
     overflow: auto hidden;
-    padding: 15px;
+    margin: 15px 15px 8px 15px;
+    padding-bottom: 7px;
     gap: 15px;
+}
+.chord-list .inner {
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.chord-list .inner .chord {
+    background-color: var(--light-background);
+    border-radius: 3px;
+    width: 200px;
     overflow: hidden;
+}
+.chord-list .chord canvas {
+    background-color: #fff;
 }
 .group .chord-list .add-chords {
     background-color: var(--light-background);
     height: 100%;
     width: 200px;
+    min-width: 200px;
     border-radius: 3px;
     display: flex;
     align-items: center;
