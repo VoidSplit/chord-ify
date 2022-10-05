@@ -159,6 +159,10 @@ class group {
                     80
                     ).fill();
             })
+            // Draw move
+            if(ch.move > 0) {
+                canctx.fillText(ch.move, 17, (((180/4) * 2) + 20) - ((180/4) / 2) + 4)
+            }
 
             card.classList = "chord"
             console.log(ch)
@@ -231,7 +235,7 @@ function openChordCreator() {
             barreInner.removeChild(i)
         }
     }
-
+    previewMove.value = 0
 
 
     let app = document.getElementById('app')
@@ -498,4 +502,9 @@ submitButton.addEventListener('click', (e) => {
     drawGroups(GROUPLIST)
 })
 
+let cancelButton = document.getElementById('cancelBtn')
+cancelButton.addEventListener('click', (e) => {
+    openChordCreator()
+    drawGroups(GROUPLIST)
+})
 init()
