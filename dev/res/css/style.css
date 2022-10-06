@@ -244,7 +244,7 @@ input[type="number"].error {
 }
 .chord-list .chord .hoverCard {
     opacity: 0;
-    background: var(--accent);
+    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, var(--very-dark-background) 80%);
     position: absolute;
     top: 0;
     left: 0;
@@ -263,10 +263,35 @@ input[type="number"].error {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 25px;
 }
 .chord-list .hoverCard .btn-r:hover {
     background-color: #fff;
     color: var(--very-dark-background)
+}
+.chord-list .hoverCard .top-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    margin: 0 0 auto;
+    align-items: center;
+    padding: 0 10px;
+    gap: 5px;
+}
+.chord-list .hoverCard .top-wrapper :not(.name) {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.chord-list .hoverCard .top-wrapper .name {
+    overflow: hidden;
+    flex-shrink: 1;
+    width: 100%;
+    margin-left: 5px;
 }
 .group .chord-list .add-chords {
     background-color: var(--light-background);

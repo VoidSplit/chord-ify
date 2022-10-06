@@ -167,19 +167,29 @@ class group {
             let hoverCard = document.createElement('div')
             let hoverCardDelete = document.createElement('div')
             let hoverCardModify = document.createElement('div')
+            let hoverCardName = document.createElement('div')
             let hoverCardDownload = document.createElement('div')
+            let topWrapper = document.createElement('div')
+
+            topWrapper.classList = "top-wrapper"
 
             hoverCard.classList = "hoverCard fc"
 
-            hoverCardDelete.classList = "btn-r"
-            hoverCardModify.classList = "btn-r"
+            hoverCardName.classList = "name"
+            hoverCardDelete.classList = "delete"
+            hoverCardModify.classList = "modify"
             hoverCardDownload.classList = "btn-r"
 
             hoverCardDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
             hoverCardModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
             hoverCardDownload.innerHTML = `<i class="fa-solid fa-download"></i>`
-
-            hoverCard.append(hoverCardDelete, hoverCardModify, hoverCardDownload)
+            hoverCardName.innerHTML = ch.name
+            hoverCardDelete.addEventListener('click', () => {
+                this.chords = this.chords.filter(chord => chord.id !== ch.id)
+                this.update()
+            })
+            hoverCard.append(topWrapper, hoverCardDownload)
+            topWrapper.append(hoverCardName,hoverCardModify,hoverCardDelete)
             card.classList = "chord"
             DOMGroupChordListInner.append(card)
             card.append(can,hoverCard)
@@ -345,7 +355,6 @@ function updateGroupsDromdown(main) {
         ul.append(ulLi)
         ulLiP.textContent = group.name;
         SELECTEDGROUP = main
-        console.log(main)
         ulLi.addEventListener('click', () => {
             updateGroupsDromdown(group.name)
         })
