@@ -103,7 +103,7 @@ class group {
             let can = document.createElement('canvas')
             let canctx = can.getContext('2d')
 
-            can.height = 362
+            can.height = 262
             can.width = 200
 
             // Reset canvas
@@ -164,15 +164,31 @@ class group {
                 canctx.fillText(ch.move, 17, (((180/4) * 2) + 20) - ((180/4) / 2) + 4)
             }
 
+            let hoverCard = document.createElement('div')
+            let hoverCardDelete = document.createElement('div')
+            let hoverCardModify = document.createElement('div')
+            let hoverCardDownload = document.createElement('div')
+
+            hoverCard.classList = "hoverCard fc"
+
+            hoverCardDelete.classList = "btn-r"
+            hoverCardModify.classList = "btn-r"
+            hoverCardDownload.classList = "btn-r"
+
+            hoverCardDelete.innerHTML = `<i class="fa-solid fa-trash"></i>`
+            hoverCardModify.innerHTML = `<i class="fa-solid fa-pen"></i>`
+            hoverCardDownload.innerHTML = `<i class="fa-solid fa-download"></i>`
+
+            hoverCard.append(hoverCardDelete, hoverCardModify, hoverCardDownload)
             card.classList = "chord"
-            console.log(ch)
             DOMGroupChordListInner.append(card)
-            card.append(can)
+            card.append(can,hoverCard)
         })
 
         DOMGroupDisplayName.addEventListener('input', this.debounce((e) => this.saveInput(e)))
 
         DOMGroupAddChord.addEventListener('click', (e) => {
+            updateGroupsDromdown(this.name)
             openChordCreator(this.id)
         })
         COLORS.forEach(color => {
@@ -224,7 +240,6 @@ function openChordCreator() {
         barres: [],
         move: 0
     }
-    SELECTEDGROUP = GROUPLIST[0].name
 
     previewName.value = ""
     for(key of previewKeys.children) {
@@ -308,7 +323,7 @@ function drawChord(canvas, chord) {
     }
 }
 function updateGroupsDromdown(main) {
-    SELECTEDGROUP = GROUPLIST[0].name
+    
     let groupsDropdown = document.getElementById('groupsDropdown')
     groupsDropdown.innerHTML = ""
     let display = document.createElement('div')
@@ -318,7 +333,9 @@ function updateGroupsDromdown(main) {
     display.classList = "display"
     ul.classList = "fc"
 
-    if(main == undefined) main = GROUPLIST[0].name
+    if(GROUPLIST.length == 0) {
+        if(main == undefined) main = undefined
+    } else if(main == undefined) main = GROUPLIST[0].name
     displayP.textContent = main
 
     GROUPLIST.filter(group => group.name !== main).forEach(group => {
@@ -327,8 +344,9 @@ function updateGroupsDromdown(main) {
         ulLi.append(ulLiP)
         ul.append(ulLi)
         ulLiP.textContent = group.name;
+        SELECTEDGROUP = main
+        console.log(main)
         ulLi.addEventListener('click', () => {
-            SELECTEDGROUP = group.name
             updateGroupsDromdown(group.name)
         })
     })
@@ -497,6 +515,7 @@ submitButton.addEventListener('click', (e) => {
     }
     CHORDIDLIST.push(id)
     chord.id = id
+    if(!SELECTEDGROUP) SELECTEDGROUP = GROUPLIST[0].name
     GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.push(chord)
     openChordCreator()
     drawGroups(GROUPLIST)
