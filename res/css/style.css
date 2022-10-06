@@ -236,6 +236,38 @@ input[type="number"].error {
 .chord-list .chord canvas {
     background-color: #fff;
 }
+.chord-list .chord {
+    position: relative;
+}
+.chord-list .chord:hover .hoverCard {
+    opacity: 1;
+}
+.chord-list .chord .hoverCard {
+    opacity: 0;
+    background: var(--accent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    transition: opacity .1s ease-in-out;
+}
+.chord-list .hoverCard .btn-r {
+    cursor: pointer;
+    background-color: var(--accent-hover);
+    height: 50px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chord-list .hoverCard .btn-r:hover {
+    background-color: #fff;
+    color: var(--very-dark-background)
+}
 .group .chord-list .add-chords {
     background-color: var(--light-background);
     height: 100%;
