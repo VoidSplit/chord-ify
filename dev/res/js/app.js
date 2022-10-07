@@ -1,5 +1,3 @@
-
-
 const COLORS = [
     {name: "red", variableName: "preset-color-red", code: "rgb(250, 128, 114)"},
     {name: "orange", variableName: "preset-color-orange", code: "rgb(255, 195, 0)"},
@@ -188,6 +186,14 @@ class group {
                 this.chords = this.chords.filter(chord => chord.id !== ch.id)
                 this.update()
             })
+            hoverCardDownload.addEventListener('click', () => {
+                let chordElement = this.chords.filter(chord => chord.id == ch.id)
+                var image = can.toDataURL();
+                var aDownloadLink = document.createElement('a');
+                aDownloadLink.download = `${chordElement[0].name}.png`;
+                aDownloadLink.href = image;
+                aDownloadLink.click();
+            }, false)
             hoverCard.append(topWrapper, hoverCardDownload)
             topWrapper.append(hoverCardName,hoverCardModify,hoverCardDelete)
             card.classList = "chord"
