@@ -186,6 +186,10 @@ class group {
                 this.chords = this.chords.filter(chord => chord.id !== ch.id)
                 this.update()
             })
+            hoverCardModify.addEventListener('click', () => {
+                let cardChord = this.chords.filter(chord => chord.id == ch.id)[0]
+                openChordCreator(cardChord)
+            })
             hoverCardDownload.addEventListener('click', () => {
                 let chordElement = this.chords.filter(chord => chord.id == ch.id)
                 var image = can.toDataURL();
@@ -248,25 +252,42 @@ function drawGroups(group) {
     updateGroupsDromdown()
 }
 
-function openChordCreator() {
-    chord = {
-        id: undefined,
-        name: "Nom de l'accord",
-        keys: "000000",
-        barres: [],
-        move: 0
+function openChordCreator(nChord) {
+    if(!nChord) {
+        chord = {
+            id: undefined,
+            name: "Nom de l'accord",
+            keys: "000000",
+            barres: [],
+            move: 0
+        }
+        
+        previewName.value = ""
+        for(key of previewKeys.children) {
+            key.value = ""
+        }
+        for(i of barreInner.children) {
+            if(i.id !== "addBarre") {
+                barreInner.removeChild(i)
+            }
+        }
+        previewMove.value = 0
+    } else {
+        chord = nChord
+        previewName.value = chord.name
+        for(key of previewKeys.children) {
+            let index = key.getAttribute('data-index')
+            key.value = chord.keys.split('')[index]
+        }
+        // TODO : Add barres to modify system
+        for(i of barreInner.children) {
+            if(i.id !== "addBarre") {
+                barreInner.removeChild(i)
+            }
+        }
+        previewMove.value = chord.move
     }
 
-    previewName.value = ""
-    for(key of previewKeys.children) {
-        key.value = ""
-    }
-    for(i of barreInner.children) {
-        if(i.id !== "addBarre") {
-            barreInner.removeChild(i)
-        }
-    }
-    previewMove.value = 0
 
 
     let app = document.getElementById('app')
@@ -435,7 +456,6 @@ let barreInner = document.getElementById('barreInner')
 
 
 addBarre.addEventListener('click', () => {
-    console.log('test')
     let line = document.createElement('div')
     let lineFromInput = document.createElement('input')
     let lineI = document.createElement('i')
@@ -523,15 +543,23 @@ addBarre.addEventListener('click', () => {
     barreInner.insertBefore(line, addBarre)
 })
 let submitButton = document.getElementById('submitBtn')
-submitButton.addEventListener('click', (e) => {
-    let id = 0;
-    while(CHORDIDLIST.includes(id)) {
-        id++
+submitButton.addEventListener('click', () => {
+    if(chord.id == undefined) {
+        let id = 0;
+        while(CHORDIDLIST.includes(id)) {
+            id++
+        }
+        CHORDIDLIST.push(id)
+        chord.id = id
     }
-    CHORDIDLIST.push(id)
-    chord.id = id
     if(!SELECTEDGROUP) SELECTEDGROUP = GROUPLIST[0].name
-    GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.push(chord)
+    if(GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.filter(c => c.id == chord.id).length !== 1) {
+        GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.push(chord)
+    } else {
+        GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords = GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.filter(c => c.id !== chord.id)
+        GROUPLIST.filter(group => group.name == SELECTEDGROUP)[0].chords.push(chord)
+
+    }
     openChordCreator()
     drawGroups(GROUPLIST)
 })
