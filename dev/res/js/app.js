@@ -209,7 +209,7 @@ class group {
 
         DOMGroupAddChord.addEventListener('click', (e) => {
             updateGroupsDromdown(this.name)
-            openChordCreator(this.id)
+            openChordCreator()
         })
         COLORS.forEach(color => {
             let element = document.createElement('div')
