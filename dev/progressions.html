@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="res/css/progressions.css">
+    <link rel="shortcut icon" href="res/images/logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <script src="res/functions/generate_chord_progression.js" defer></script>
+    <script src="res/js/progression.js" defer></script>
+    
+    <title>Document</title>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="branding fr">
+            <img src="res/images/logo.svg" alt="Logo">
+            <span>Better Chords</span>
+        </div>
+        <ul>
+            <li><a href="index.html">Diagrammes</a></li>
+            <li class="active"><a href="#">Générateur de progressions d'accords</a></li>
+        </ul>
+    </nav>
+    <div id="app" class="fr">
+        <div class="groupInner fc">
+            <div class="form">
+                <div class="dropdownbox">
+                    <div class="label">Selectionnez la fondamentale</div>
+                    <div class="comp dropdown" id="dropdown">
+                        <input type="text" id="input">
+                        <ul class="fc" id="dropdownList">
+                            <li>
+                                <p>Nouveau Groupe 2</p>
+                            </li>
+                            <li>
+                                <p>Nouveau Groupe 3</p>
+                            </li>
+                            <li>
+                                <p>Nouveau Groupe 4</p>
+                            </li>
+                            <li>
+                                <p>Nouveau Groupe 5</p>
+                            </li>
+                            <li>
+                                <p>Nouveau Groupe 6</p>
+                            </li>
+                            <li>
+                                <p>Nouveau Groupe 7</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="btn" id="generate">Génerer</div>
+            </div>
+            <div id="table" class="table"></div>
+            
+        </div>
+    </div>
+</body>
+</html>

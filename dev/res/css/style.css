@@ -75,6 +75,29 @@ nav .branding img {
     height: 100%;
 }
 
+nav ul {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+nav ul li {
+    display: flex;
+    color: #fff;
+    list-style-type: none;
+    border-radius: 5px;
+    margin: 10px 15px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+nav ul li:hover,
+nav ul li.active {
+    background-color: var(--dark-background);
+}
+
 #app {
     background-color: var(--dark-background);
     background-size: 10px 10px;

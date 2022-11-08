@@ -565,7 +565,7 @@ submitButton.addEventListener('click', () => {
 })
 
 let cancelButton = document.getElementById('cancelBtn')
-cancelButton.addEventListener('click', (e) => {
+cancelButton.addEventListener('click', () => {
     openChordCreator()
     drawGroups(GROUPLIST)
 })
